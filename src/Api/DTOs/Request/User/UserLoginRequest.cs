@@ -1,6 +1,6 @@
-﻿namespace Api.DTOs
+﻿namespace Api.DTOs.Request.User
 {
-    public class UserLoginDTO
+    public class UserLoginRequest
     {
         public string Email { get; set; }
         public string Password { get; set; }

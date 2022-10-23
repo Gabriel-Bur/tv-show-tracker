@@ -1,4 +1,4 @@
-﻿using Api.DTOs;
+﻿using Api.DTOs.Request.User;
 using Api.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -11,8 +11,15 @@ namespace Api.Endpoint
     {
         public void DefineEndpoints(WebApplication app)
         {
-            app.MapPost("/user/register", Register).AllowAnonymous().Produces(200).Produces(400);
-            app.MapPost("/user/login", Login).AllowAnonymous().Produces(200).Produces(401);
+            app.MapPost("/user/register", Register)
+                .AllowAnonymous()
+                .Produces(201)
+                .Produces(400);
+            
+            app.MapPost("/user/login", Login)
+                .AllowAnonymous()
+                .Produces(200)
+                .Produces(401);
         }
 
         public void DefineServices(IServiceCollection services)
@@ -20,14 +27,16 @@ namespace Api.Endpoint
         }
 
         #region Methods
-        internal async Task<IResult> Register(UserManager<IdentityUser> usrMgr, UserRegistrationDTO userRegistration)
+        internal async Task<IResult> Register(
+            UserManager<IdentityUser> usrMgr, UserRegistrationRequest userRegistration)
         {
             var usrIdentity = new IdentityUser() { UserName = userRegistration.UserName, Email = userRegistration.Email };
             var result = await usrMgr.CreateAsync(usrIdentity, userRegistration.Password);
 
             return result.Succeeded ? Results.Created($"/user", result) : Results.BadRequest(result.Errors);
         }
-        internal async Task<IResult> Login(IConfiguration configuration, UserManager<IdentityUser> usrMgr, UserLoginDTO userLogin)
+        internal async Task<IResult> Login(
+            IConfiguration configuration, UserManager<IdentityUser> usrMgr, UserLoginRequest userLogin)
         {
             var usrIdentity = await usrMgr.FindByEmailAsync(userLogin.Email);
             bool isValidPwd = await usrMgr.CheckPasswordAsync(usrIdentity, userLogin.Password);

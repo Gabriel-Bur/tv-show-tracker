@@ -22,6 +22,7 @@ namespace Api.Extensions.Configuration
         public static void UseDbContextConfiguration(this WebApplication application)
         {
             using var scope = application.Services.CreateScope();
+
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             dbContext.Database.EnsureCreated();

@@ -1,5 +1,4 @@
 ﻿using Microsoft.OpenApi.Models;
-using System.ComponentModel;
 
 namespace Api.Extensions.Configuration
 {
@@ -18,7 +17,7 @@ namespace Api.Extensions.Configuration
                 Scheme = "Bearer",
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Description = "JSON Web Token based security",
+                Description = "\"Standard Authorization header using the Bearer scheme (JWT). Example: \\\"bearer {token}\\\"\"",
             };
 
             var securityReq = new OpenApiSecurityRequirement()
