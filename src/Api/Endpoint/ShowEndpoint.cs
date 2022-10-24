@@ -75,6 +75,7 @@ namespace Api.Endpoint
 
             return Results.Ok(new ShowResponse
             {
+                Id = result.Id,
                 Name = result.Name,
                 Description = result.Description,
                 Url = result.Url,

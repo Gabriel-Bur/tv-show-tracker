@@ -8,10 +8,10 @@ namespace Api.Extensions.Configuration
     {
         public static void AddDbContextConfiguration(this IServiceCollection services, WebApplicationBuilder builder)
         {
-            string connection = builder.Configuration.GetConnectionString("SqlConnection");
+            //string connection = builder.Configuration.GetConnectionString("SqlConnection");
 
             // For Entity Framework
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("InMemoryLocalTvShowTracerDb"));
 
             // For Identity
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
